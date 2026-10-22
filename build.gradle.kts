@@ -63,7 +63,7 @@ tasks {
         changeNotes.set("""
             <H2>Changelog for 0.9.0</H2>
             <ul>
-              <li>New plugin ID and vendor: maintained fork "Git Flow Integration Revived" by Simone Vincenzi</li>
+              <li>New plugin ID and vendor: maintained fork "Git Flow Manager" by Simone Vincenzi</li>
               <li>Support for IntelliJ 2026.2 (build 262): migrate to IntelliJ Platform Gradle Plugin 2.x, Java 25</li>
               <li>Task Management plugin is now an optional dependency (no longer bundled in 2026.x) #51</li>
               <li>Fix "Freeze in EDT": status bar widget refresh runs off the EDT #47</li>

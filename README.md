@@ -1,4 +1,4 @@
-# Git Flow Integration Revived for IntelliJ
+# Git Flow Manager for IntelliJ
 
 > **Maintained fork** by Simone Vincenzi of [gitflow4idea-plus](https://github.com/RubinCarter/gitflow4idea-plus) (Rubin Carter),
 > itself a fork of [gitflow4idea](https://github.com/OpherV/gitflow4idea) (Opher Vishnia).
@@ -28,7 +28,7 @@ Huge shoutout [to Kirill Likhodedov](https://github.com/klikh), who wrote much o
 
 ## Online Installation
 
-The plugin is available via the IntelliJ plugin manager. Just search for "Git Flow Integration Revived" to get the latest version!
+The plugin is available via the IntelliJ plugin manager. Just search for "Git Flow Manager" to get the latest version!
 
 **The plugin requires that you have gitflow installed, specifically the [AVH edition](https://github.com/petervanderdoes/gitflow). This is because the [Vanilla Git Flow](https://github.com/nvie/gitflow) hasn't been maintained in years.** See this page [for details](https://github.com/svincio/gitflow4idea-plus/blob/develop/GITFLOW_VERSION.md)
 

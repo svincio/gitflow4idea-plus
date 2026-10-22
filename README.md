@@ -44,6 +44,26 @@ The plugin is not on the JetBrains Marketplace yet.
 
 The Gitflow widget appears in the status bar, the actions are in **Git → Gitflow** and in the widget popup.
 
+### Troubleshooting
+
+- **The Gitflow widget does not appear in the status bar**: restart the IDE once more after installing, then right-click the status bar and check that *GitFlow status bar* is enabled.
+- **"Unsupported Git Flow version"**: check `git flow version` in a terminal; see [Requirements](#requirements).
+- Anything else: **Help → Show Log in Finder/Explorer** and attach `idea.log` (or the stack trace from the red error icon) to an [issue](https://github.com/svincio/gitflow4idea-plus/issues).
+
+## Changes from upstream
+
+Compared with [gitflow4idea-plus](https://github.com/RubinCarter/gitflow4idea-plus) 0.8.1-beta.2:
+
+- Works on IntelliJ 2024.2 to 2026.2 and later (the upstream plugin is marked incompatible after 2024.1).
+- The Task Management plugin is optional: it is no longer bundled with the IDE since 2026.x.
+- No more IDE freeze while the status bar widget refreshes ([#47](https://github.com/RubinCarter/gitflow4idea-plus/issues/47)), no more `NullPointerException` on `gitflowBranchUtil` ([#42](https://github.com/RubinCarter/gitflow4idea-plus/issues/42)).
+- Finish Feature/Bugfix/Release with merge conflicts: the standard Git merge dialog opens and the finish resumes by itself (it used to stop half-way on recent IDEs).
+- git-flow-next merge conflicts are detected like the AVH ones.
+- No internal or deprecated IntelliJ APIs; a memory leak in the popup is fixed.
+- New plugin ID `io.github.svincio.gitflow` and name *Git Flow Manager*, so it can be installed and updated independently.
+
+The full list is in the change notes (Settings → Plugins → Git Flow Manager) and in the git history.
+
 ## Building from source
 
 ```bash
@@ -55,9 +75,12 @@ The Gitflow widget appears in the status bar, the actions are in **Git → Gitfl
 A JDK 25 is required to build (the 2026.2 platform classes are Java 25); Gradle downloads it automatically if missing.
 The plugin itself is compiled to Java 21 bytecode, so it also runs on IDEs based on JBR 21.
 
-## Caveats
+## Known limitations
 
-While the plugin is operational and contains all basic functions (init/feature/release/hotfix), it may contains bugs. With your help I'll be able to find and zap them all.
+- **Finish Hotfix with merge conflicts** does not open the merge dialog (unchanged from upstream): resolve the conflicts with **Git → Resolve Conflicts**, commit, and complete the finish from a terminal with `git flow hotfix finish <name>`.
+- **git-flow-next** support has been checked on the command line with git-flow-next 2.1.0, not yet inside the IDE. AVH is the edition tested end to end.
+- **IDE versions before 2026.2** are checked with the IntelliJ Plugin Verifier only; hands-on testing so far is on IntelliJ IDEA 2026.2.
+- The plugin may still contain bugs: please report them (see below).
 
 ## Helping out
 

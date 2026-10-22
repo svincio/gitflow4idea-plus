@@ -14,7 +14,7 @@ repositories {
 }
 
 group = "io.github.svincio"
-version = "0.9.0"
+version = "0.9.1"
 
 java {
     toolchain {
@@ -71,7 +71,7 @@ tasks {
         sinceBuild.set("242")
         untilBuild.set(provider { null })
         changeNotes.set("""
-            <H2>Changelog for 0.9.0</H2>
+            <H2>Changelog for 0.9.1</H2>
             <ul>
               <li>New plugin ID and vendor: maintained fork "Git Flow Manager" by Simone Vincenzi</li>
               <li>Support for IntelliJ 2024.2 to 2026.2 (builds 242 to 262): migrate to IntelliJ Platform Gradle Plugin 2.x</li>

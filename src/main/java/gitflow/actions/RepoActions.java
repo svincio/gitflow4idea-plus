@@ -1,22 +1,18 @@
 package gitflow.actions;
 
-import com.intellij.dvcs.DvcsUtil;
 import com.intellij.dvcs.ui.BranchActionGroup;
 import com.intellij.dvcs.ui.PopupElementWithAdditionalInfo;
 import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.fileEditor.FileEditorManagerEvent;
-import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.project.Project;
 import git4idea.branch.GitBranchUtil;
 import git4idea.repo.GitRepository;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-class RepoActions extends BranchActionGroup implements PopupElementWithAdditionalInfo, FileEditorManagerListener {
+class RepoActions extends BranchActionGroup implements PopupElementWithAdditionalInfo {
     Project myProject;
     GitRepository myRepo;
 
@@ -26,8 +22,6 @@ class RepoActions extends BranchActionGroup implements PopupElementWithAdditiona
 
         String repoName = repo.getRoot().getPresentableName();
         getTemplatePresentation().setText(repoName, false); // no mnemonics
-        this.updateFavoriteIcon();
-        project.getMessageBus().connect().subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, this);
     }
 
     public ArrayList<AnAction> getRepoActions(boolean includeAdvanced){
@@ -101,16 +95,15 @@ class RepoActions extends BranchActionGroup implements PopupElementWithAdditiona
         return "what's this";
     }
 
-    public void updateFavoriteIcon(){
-        SwingUtilities.invokeLater(() -> {
-            boolean isFavorite = GitBranchUtil.guessWidgetRepository(myProject, DvcsUtil.getSelectedFile(myProject)) == myRepo;
-            setFavorite(isFavorite);
-        });
+    // Recomputed every time the popup is shown: no editor listener needed (it leaked one subscription per instance)
+    @Override
+    public void update(@NotNull AnActionEvent e) {
+        setFavorite(GitBranchUtil.guessWidgetRepository(myProject, e.getDataContext()) == myRepo);
     }
 
     @Override
-    public void selectionChanged(@NotNull FileEditorManagerEvent event) {
-        this.updateFavoriteIcon();
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 }
 

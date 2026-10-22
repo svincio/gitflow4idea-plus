@@ -20,7 +20,8 @@ public class GitflowErrorsListener extends GitflowLineHandler{
         if (line.contains("Not a gitflow-enabled repo yet")) {
             NotifyUtil.notifyError(myProject, "Error", "Not a gitflow-enabled repo yet. Please init git flow");
         }
-        if (line.contains("There were merge conflicts")){
+        // AVH/cjs: "There were merge conflicts"; git-flow-next: "Merge conflict detected while finishing <branch>"
+        if (line.contains("There were merge conflicts") || line.contains("Merge conflict detected")){
             hasMergeError=true;
         }
     }

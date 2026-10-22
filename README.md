@@ -32,6 +32,7 @@ Huge shoutout [to Kirill Likhodedov](https://github.com/klikh), who wrote much o
 - A git-flow CLI on the `PATH`: [AVH edition](https://github.com/petervanderdoes/gitflow), [git-flow-next](https://github.com/gittower/git-flow-next) or [gitflow-cjs](https://github.com/CJ-Systems/gitflow-cjs).
   The original [nvie git-flow](https://github.com/nvie/gitflow) is not supported: it hasn't been maintained in years. See [GITFLOW_VERSION.md](GITFLOW_VERSION.md).
   On macOS the Homebrew formula `git-flow-avh` was disabled on 2025-03-03 (existing installs keep working); for new setups `brew install git-flow-next`.
+  On Debian/Ubuntu `apt install git-flow` still installs AVH. On Windows, download git-flow-next from its [releases](https://github.com/gittower/git-flow-next/releases).
 
 ## Installation
 

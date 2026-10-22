@@ -14,7 +14,7 @@ repositories {
 }
 
 group = "io.github.svincio"
-version = "0.9.1"
+version = "0.9.2"
 
 java {
     toolchain {
@@ -71,6 +71,11 @@ tasks {
         sinceBuild.set("242")
         untilBuild.set(provider { null })
         changeNotes.set("""
+            <H2>Changelog for 0.9.2</H2>
+            <ul>
+              <li>git-flow-next: merge conflicts during Finish Feature/Bugfix/Release are detected, the Git merge dialog opens and the finish resumes</li>
+            </ul>
+
             <H2>Changelog for 0.9.1</H2>
             <ul>
               <li>New plugin ID and vendor: maintained fork "Git Flow Manager" by Simone Vincenzi</li>

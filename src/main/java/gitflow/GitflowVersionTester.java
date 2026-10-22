@@ -77,7 +77,7 @@ public class GitflowVersionTester {
 		String returnedVersion = null;
 		try {
 			returnedVersion = gitflow.version(project).getOutputOrThrow();
-			logger.info("git flow version: " + version);
+			logger.info("git flow version: " + returnedVersion);
 		} catch (Exception e) {
 			logger.error("Could not determine git flow version", e);
 		}

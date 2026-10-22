@@ -1,5 +1,7 @@
 package gitflow.actions;
 
+import com.intellij.openapi.actionSystem.ActionUiKind;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.ex.ActionUtil;
 import com.intellij.openapi.actionSystem.impl.SimpleDataContext;
@@ -14,6 +16,7 @@ import git4idea.actions.GitResolveConflictsAction;
 public class GitflowActions {
 
     public static void runMergeTool(Project project){
-        ActionUtil.invokeAction(new GitResolveConflictsAction(), SimpleDataContext.getProjectContext(project), ActionPlaces.UNKNOWN, null, null);
+        GitResolveConflictsAction action = new GitResolveConflictsAction();
+        ActionUtil.performAction(action, AnActionEvent.createEvent(action, SimpleDataContext.getProjectContext(project), null, ActionPlaces.UNKNOWN, ActionUiKind.NONE, null));
     }
 }

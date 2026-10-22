@@ -1,5 +1,6 @@
 package gitflow.ui;
 
+import com.intellij.dvcs.DvcsUtil;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
@@ -80,7 +81,7 @@ public class GitflowOpenTaskPanel extends TaskDialogPanel implements ItemListene
         String defaultBugfixBranch = gitflowConfigUtil.developBranch;
         bugfixBaseBranch.setModel(gitflowBranchUtil.createBranchComboModel(defaultBugfixBranch));
 
-        myRepo = GitBranchUtil.getCurrentRepository(project);
+        myRepo = GitBranchUtil.guessWidgetRepository(project, DvcsUtil.getSelectedFile(project));
 
         String branchName = myVcsTaskHandler != null
                                             ? myVcsTaskHandler.cleanUpBranchName(myTaskManager.constructDefaultBranchName(task))

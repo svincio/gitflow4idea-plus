@@ -63,7 +63,7 @@ tasks {
               <li>Task Management plugin is now an optional dependency (no longer bundled in 2026.x) #51</li>
               <li>Fix "Freeze in EDT": status bar widget refresh runs off the EDT #47</li>
               <li>Fix NullPointerException on gitflowBranchUtil #42</li>
-              <li>Replace internal/override-only API usages flagged by the Plugin Verifier</li>
+              <li>Remove all internal, override-only, deprecated and scheduled-for-removal API usages flagged by the Plugin Verifier</li>
             </ul>
 
             <H2>Changelog for 0.8.1-beta.2</H2>

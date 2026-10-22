@@ -3,15 +3,13 @@ package gitflow;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.OSProcessHandler;
-import com.intellij.execution.process.ProcessAdapter;
+import com.intellij.execution.process.ProcessListener;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
-import com.intellij.openapi.util.registry.Registry;
 import com.intellij.openapi.vfs.VirtualFile;
 import git4idea.commands.GitCommand;
 import git4idea.commands.GitLineHandler;
-import git4idea.commands.GitTextHandler;
 import git4idea.util.GitVcsConsoleWriter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,8 +36,8 @@ public class GitInitLineHandler extends GitLineHandler {
 
     @Override
     protected OSProcessHandler createProcess(@NotNull GeneralCommandLine commandLine) throws ExecutionException {
-        MyOSProcessHandler process = new MyOSProcessHandler(commandLine, this.myWithMediator && Registry.is("git.execute.with.mediator"));
-        process.addProcessListener(new ProcessAdapter() {
+        OSProcessHandler process = super.createProcess(commandLine);
+        process.addProcessListener(new ProcessListener() {
             @Override
             public void onTextAvailable(@NotNull ProcessEvent event, @NotNull Key outputType) {
                 String s = event.getText();
@@ -144,12 +142,5 @@ public class GitInitLineHandler extends GitLineHandler {
     @Override
     protected void processTerminated(int exitCode) {
         super.processTerminated(exitCode);
-    }
-
-    static class MyOSProcessHandler extends GitTextHandler.MyOSProcessHandler {
-        MyOSProcessHandler(@NotNull GeneralCommandLine commandLine,
-                boolean withMediator) throws ExecutionException {
-            super(commandLine, withMediator);
-        }
     }
 }

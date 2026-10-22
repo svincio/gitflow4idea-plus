@@ -1,29 +1,49 @@
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.14.2"
+    id("org.jetbrains.intellij.platform") version "2.19.0"
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 group = "gitflow4idea-plus"
-version = "0.8.1-beta.2"
+version = "0.8.2-beta.1"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 
 dependencies {
     testImplementation("junit:junit:4.13.2")
+    intellijPlatform {
+        intellijIdea("2026.2.2")
+        bundledPlugin("Git4Idea")
+        bundledModule("intellij.platform.vcs.dvcs")
+        bundledModule("intellij.platform.vcs.dvcs.impl")
+        // Task Management UI is no longer bundled since 2026.x: optional dependency (see gitflow-tasks.xml)
+        plugin("com.intellij.tasks", "262.8665.173")
+        bundledModule("intellij.platform.tasks")
+        bundledModule("intellij.platform.tasks.impl")
+        pluginVerifier()
+        testFramework(TestFrameworkType.Platform)
+    }
 }
 
-intellij {
-    version.set("2023.1")
-    plugins.set(listOf("Git4Idea", "tasks"))
-    updateSinceUntilBuild.set(false)
+intellijPlatform {
+    pluginVerification {
+        ides {
+            create(IntelliJPlatformType.IntellijIdea, "2026.2.2")
+        }
+    }
 }
 
 tasks {
@@ -33,9 +53,19 @@ tasks {
             <H2>Git Flow Integration for Intellij</H2>
             An intelliJ plugin providing a UI layer for git-flow, which in itself is a collection of Git extensions to provide high-level repository operations for Vincent <a href="https://nvie.com/posts/a-successful-git-branching-model/">Driessen's branching model</a>
         """)
-        version.set("${project.version}")
-        sinceBuild.set("231.8109.175")
+        pluginVersion.set("${project.version}")
+        sinceBuild.set("262")
+        untilBuild.set(provider { null })
         changeNotes.set("""
+            <H2>Changelog for 0.8.2-beta.1</H2>
+            <ul>
+              <li>Support for IntelliJ 2026.2 (build 262): migrate to IntelliJ Platform Gradle Plugin 2.x, Java 25</li>
+              <li>Task Management plugin is now an optional dependency (no longer bundled in 2026.x) #51</li>
+              <li>Fix "Freeze in EDT": status bar widget refresh runs off the EDT #47</li>
+              <li>Fix NullPointerException on gitflowBranchUtil #42</li>
+              <li>Replace internal/override-only API usages flagged by the Plugin Verifier</li>
+            </ul>
+
             <H2>Changelog for 0.8.1-beta.2</H2>
             <ul>
               <li>Support git-flow-next implementation #45</li>

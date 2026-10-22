@@ -1,6 +1,7 @@
 package gitflow.actions;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.ex.ActionUtil;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.ui.Messages;
@@ -113,7 +114,7 @@ public class FinishReleaseAction extends AbstractBranchAction {
                             if (errorLineHandler.hasMergeError){
                                 if (handleMerge(myProject)) {
                                     FinishReleaseAction completeFinisReleaseAction = new FinishReleaseAction(releaseName, tagMessage);
-                                    completeFinisReleaseAction.actionPerformed(event);
+                                    ActionUtil.invokeAction(completeFinisReleaseAction, event.getDataContext(), event.getPlace(), null, null);
                                 }
                             }
                         }

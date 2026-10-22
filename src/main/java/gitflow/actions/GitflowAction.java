@@ -5,6 +5,8 @@ import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.DumbAwareAction;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vcs.VcsException;
@@ -17,6 +19,7 @@ import gitflow.GitflowBranchUtil;
 import gitflow.GitflowBranchUtilManager;
 import gitflow.IDEAUtils;
 import gitflow.ui.NotifyUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -65,8 +68,12 @@ public abstract class GitflowAction extends DumbAwareAction {
         setup(project);
     }
 
-    //returns true if merge successful, false otherwise
-    public boolean handleMerge(final Project project) {
+    /**
+     * Runs the merge tool on the EDT, then asks the user whether the merge is complete. If so, the merge commit
+     * and the repository refresh run in background (both are forbidden on the EDT since 2026.x) and
+     * {@code onMergeCommitted} is invoked on the EDT afterwards, e.g. to resume the gitflow finish command.
+     */
+    public void handleMerge(final Project project, final Runnable onMergeCommitted) {
         // FIXME As of 201.0 the async version of this method still doesn't make use of the callback, else we'd
         //  simply use a FutureTask (which is a Runnable) and its get() method prior to launching the merge tool.
         virtualFileMananger.syncRefresh();
@@ -85,17 +92,40 @@ public abstract class GitflowAction extends DumbAwareAction {
                 end = System.currentTimeMillis();
             } while(end - start < 1000L); // Additional hack: a window open <1s obviously didn't open, let's try again.
 
-            myRepo.update();
-
             // And refreshing again so an onscreen file doesn't show in a conflicted state when the Y/N dialog show up.
             virtualFileMananger.syncRefresh();
             Thread.sleep(VFM_REFRESH_DELAY);
-
-            return askUserForMergeSuccess(project);
         }
         catch (InterruptedException ignored) {
-            return false;
+            return;
         }
+
+        if (!askUserForMergeSuccess(project)) {
+            return;
+        }
+
+        new Task.Backgroundable(project, "Committing merge result", false) {
+            private boolean committed;
+
+            @Override
+            public void run(@NotNull ProgressIndicator indicator) {
+                GitMerger gitMerger = new GitMerger(project);
+                try {
+                    gitMerger.mergeCommit(gitMerger.getMergingRoots());
+                    committed = true;
+                } catch (VcsException e) {
+                    NotifyUtil.notifyError(project, "Error", "Error committing merge result: " + e.getMessage());
+                }
+                myRepo.update();
+            }
+
+            @Override
+            public void onSuccess() {
+                if (committed) {
+                    onMergeCommitted.run();
+                }
+            }
+        }.queue();
     }
 
     private static boolean askUserForMergeSuccess(Project myProject) {
@@ -104,15 +134,6 @@ public abstract class GitflowAction extends DumbAwareAction {
         //merging can be done via intellij itself or any other util
         int answer = Messages.showYesNoDialog(myProject, "Was the merge completed succesfully?", "Merge", Messages.getQuestionIcon());
         if (answer==0){
-            GitMerger gitMerger=new GitMerger(myProject);
-
-            try {
-                gitMerger.mergeCommit(gitMerger.getMergingRoots());
-            } catch (VcsException e1) {
-                NotifyUtil.notifyError(myProject, "Error", "Error committing merge result");
-                e1.printStackTrace();
-            }
-
             return true;
         }
         else{

@@ -98,10 +98,7 @@ public class FinishFeatureAction extends AbstractBranchAction {
 
                 //merge conflicts if necessary
                 if (errorLineHandler.hasMergeError){
-                    if (handleMerge(project)) {
-                        that.runAction(project, featureName);
-                        FinishFeatureAction completeFinishFeatureAction = new FinishFeatureAction(myRepo, featureName);
-                    }
+                    handleMerge(project, () -> that.runAction(project, featureName));
 
                 }
 

@@ -26,7 +26,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.popup.JBPopup;
-import com.intellij.openapi.ui.popup.ListPopup;
+import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.IdeFocusManager;
 import com.intellij.openapi.wm.StatusBar;
@@ -34,7 +34,6 @@ import com.intellij.openapi.wm.StatusBarWidget;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.openapi.wm.impl.status.EditorBasedWidget;
 import com.intellij.ui.awt.RelativePoint;
-import com.intellij.ui.popup.PopupFactoryImpl;
 import com.intellij.util.Consumer;
 import com.intellij.openapi.vcs.VcsRoot;
 import com.intellij.openapi.vcs.ProjectLevelVcsManager;
@@ -132,8 +131,8 @@ public class GitflowWidget extends GitBranchWidget implements GitRepositoryChang
             return null;
         }
 
-        return new PopupFactoryImpl.ActionGroupPopup("Gitflow Actions", popupGroup.getActionGroup(), dataContext, false, false, false, true, null, -1,
-                null, null);
+        return JBPopupFactory.getInstance().createActionGroupPopup("Gitflow Actions", popupGroup.getActionGroup(), dataContext,
+                false, false, true, null, -1, null);
     }
 
     @NotNull
@@ -207,7 +206,7 @@ public class GitflowWidget extends GitBranchWidget implements GitRepositoryChang
             return;
         }
 
-        GitRepository repo = GitBranchUtil.getCurrentRepository(project);
+        GitRepository repo = GitBranchUtil.guessWidgetRepository(project, (VirtualFile) null);
         if (repo == null) { // the file is not under version control => display nothing
             emptyTextAndTooltip();
             return;
@@ -272,9 +271,9 @@ public class GitflowWidget extends GitBranchWidget implements GitRepositoryChang
      */
     public void showPopupInCenterOf(@NotNull JFrame frame) {
         update();
-        ListPopup popupStep = getPopupStep();
-        if (popupStep != null)
-            popupStep.showInCenterOf(frame);
+        JBPopup popup = getPopup();
+        if (popup != null)
+            popup.showInCenterOf(frame);
     }
 
     @NotNull
@@ -289,25 +288,25 @@ public class GitflowWidget extends GitBranchWidget implements GitRepositoryChang
     }
 
     public boolean getIsSupportedVersion(){
-        GitflowVersionTester versionTester = GitflowVersionTester.forProject(myProject);
+        GitflowVersionTester versionTester = GitflowVersionTester.forProject(getProject());
         return versionTester.hasVersionBeenTested() && versionTester.isSupportedVersion();
     }
 
     public boolean getHasVersionBeenTested(){
-        return GitflowVersionTester.forProject(myProject).hasVersionBeenTested();
+        return GitflowVersionTester.forProject(getProject()).hasVersionBeenTested();
     }
 
     private void initVersionCheck(){
 
         // init the gitflow cli version check in a new thread and not on the EDT
-        String version = GitflowVersionTester.forProject(myProject).getVersion();
+        String version = GitflowVersionTester.forProject(getProject()).getVersion();
         if (version == null) {
             final Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    VcsRoot[] vcsRoots = ProjectLevelVcsManager.getInstance(myProject).getAllVcsRoots();
+                    VcsRoot[] vcsRoots = ProjectLevelVcsManager.getInstance(getProject()).getAllVcsRoots();
                     if (vcsRoots.length > 0 && vcsRoots[0].getVcs() instanceof GitVcs) {
-                        GitflowVersionTester.forProject(myProject).init();
+                        GitflowVersionTester.forProject(getProject()).init();
                     }
 
                 }

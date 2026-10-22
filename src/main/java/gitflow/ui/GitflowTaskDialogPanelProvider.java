@@ -1,5 +1,6 @@
 package gitflow.ui;
 
+import com.intellij.dvcs.DvcsUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.tasks.LocalTask;
 import com.intellij.tasks.TaskManager;
@@ -18,7 +19,7 @@ public class GitflowTaskDialogPanelProvider extends VcsTaskDialogPanelProvider {
     @Nullable
     @Override
     public TaskDialogPanel getOpenTaskPanel(@NotNull Project project, @NotNull LocalTask task) {
-        GitRepository currentRepo = GitBranchUtil.getCurrentRepository(project);
+        GitRepository currentRepo = GitBranchUtil.guessWidgetRepository(project, DvcsUtil.getSelectedFile(project));
         GitflowBranchUtil branchUtil = GitflowBranchUtilManager.getBranchUtil(currentRepo);
         if (branchUtil.hasGitflow()) {
             return TaskManager.getManager(project).isVcsEnabled() ? new GitflowOpenTaskPanel(project, task, currentRepo) : null;
@@ -31,7 +32,7 @@ public class GitflowTaskDialogPanelProvider extends VcsTaskDialogPanelProvider {
     @Nullable
     @Override
     public TaskDialogPanel getCloseTaskPanel(@NotNull Project project, @NotNull LocalTask task) {
-        GitRepository currentRepo = GitBranchUtil.getCurrentRepository(project);
+        GitRepository currentRepo = GitBranchUtil.guessWidgetRepository(project, DvcsUtil.getSelectedFile(project));
         GitflowBranchUtil branchUtil = GitflowBranchUtilManager.getBranchUtil(currentRepo);
 
         if (branchUtil.hasGitflow()) {

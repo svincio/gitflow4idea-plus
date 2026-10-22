@@ -1,5 +1,6 @@
 package gitflow.actions;
 
+import com.intellij.dvcs.DvcsUtil;
 import com.intellij.dvcs.ui.BranchActionGroup;
 import com.intellij.dvcs.ui.PopupElementWithAdditionalInfo;
 import com.intellij.openapi.actionSystem.*;
@@ -102,7 +103,7 @@ class RepoActions extends BranchActionGroup implements PopupElementWithAdditiona
 
     public void updateFavoriteIcon(){
         SwingUtilities.invokeLater(() -> {
-            boolean isFavorite = GitBranchUtil.getCurrentRepository(myProject) == myRepo;
+            boolean isFavorite = GitBranchUtil.guessWidgetRepository(myProject, DvcsUtil.getSelectedFile(myProject)) == myRepo;
             setFavorite(isFavorite);
         });
     }

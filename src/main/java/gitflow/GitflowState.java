@@ -16,7 +16,7 @@ import java.util.HashMap;
 @State(
         name = "GitflowState", storages = {
         @Storage(
-                file = "$APP_CONFIG$/GitflowState.xml")
+                value = "GitflowState.xml")
 })
 public class GitflowState implements PersistentStateComponent<GitflowState> {
 

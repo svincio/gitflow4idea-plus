@@ -28,8 +28,8 @@ public class FinishReleaseAction extends AbstractBranchAction {
         super(repo, "Finish Release", BranchType.Release);
     }
 
-	FinishReleaseAction(String name, String tagMessage) {
-		super("Finish Release", BranchType.Release);
+	FinishReleaseAction(GitRepository repo, String name, String tagMessage) {
+		super(repo, "Finish Release", BranchType.Release);
 		customReleaseName = name;
 		customtagMessage = tagMessage;
 	}
@@ -113,10 +113,10 @@ public class FinishReleaseAction extends AbstractBranchAction {
 
                             //merge conflicts if necessary
                             if (errorLineHandler.hasMergeError){
-                                if (handleMerge(myProject)) {
-                                    FinishReleaseAction completeFinisReleaseAction = new FinishReleaseAction(releaseName, tagMessage);
+                                handleMerge(myProject, () -> {
+                                    FinishReleaseAction completeFinisReleaseAction = new FinishReleaseAction(myRepo, releaseName, tagMessage);
                                     ActionUtil.performAction(completeFinisReleaseAction, AnActionEvent.createEvent(completeFinisReleaseAction, event.getDataContext(), null, event.getPlace(), ActionUiKind.NONE, null));
-                                }
+                                });
                             }
                         }
 

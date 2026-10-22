@@ -98,10 +98,7 @@ public class FinishBugfixAction extends AbstractBranchAction {
 
                 //merge conflicts if necessary
                 if (errorLineHandler.hasMergeError){
-                    if (handleMerge(project)){
-                        that.runAction(project, bugfixName);
-                        FinishBugfixAction completeFinishBugfixAction = new FinishBugfixAction(myRepo, bugfixName);
-                    }
+                    handleMerge(project, () -> that.runAction(project, bugfixName));
 
                 }
 

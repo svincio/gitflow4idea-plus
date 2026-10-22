@@ -44,7 +44,7 @@ public class UnsupportedVersionWidgetPresentation implements StatusBarWidget.Tex
 					.yesText("More information (open browser)")
 					.noText("Close");
 			if (builder.ask(mouseEvent.getComponent())) {
-				BrowserUtil.browse("https://github.com/RubinCarter/gitflow4idea-plus/blob/develop/GITFLOW_VERSION.md");
+				BrowserUtil.browse("https://github.com/svincio/gitflow4idea-plus/blob/develop/GITFLOW_VERSION.md");
 			}
 		};
 

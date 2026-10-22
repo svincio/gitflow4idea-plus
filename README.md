@@ -1,11 +1,14 @@
-# Git Flow Integration Plus for Intellij
+# Git Flow Integration Revived for IntelliJ
 
-### Available @ [JetBrains Plugins Repository][1]
+> **Maintained fork** by Simone Vincenzi of [gitflow4idea-plus](https://github.com/RubinCarter/gitflow4idea-plus) (Rubin Carter),
+> itself a fork of [gitflow4idea](https://github.com/OpherV/gitflow4idea) (Opher Vishnia).
+> It brings the plugin to current IntelliJ versions (2026.2+). Plugin ID: `io.github.svincio.gitflow`.
+> Changes from upstream are listed in the plugin change notes and in the git history.
 
 
 An intelliJ plugin providing a UI layer for git-flow, which in itself is a collection of Git extensions to provide high-level repository operations for Vincent [Driessen's branching model](http://nvie.com/git-model).
 
-![screenshot](https://github.com/RubinCarter/gitflow4idea-fix/blob/develop/docs/img/gitflow.png)
+![screenshot](https://github.com/svincio/gitflow4idea-plus/blob/develop/docs/img/gitflow.png)
 
 ## Companion agent skill (experimental)
 
@@ -25,16 +28,16 @@ Huge shoutout [to Kirill Likhodedov](https://github.com/klikh), who wrote much o
 
 ## Online Installation
 
-The plugin is available via the IntelliJ plugin manager. Just search for "Git Flow Integration Plus" to get the latest version!
+The plugin is available via the IntelliJ plugin manager. Just search for "Git Flow Integration Revived" to get the latest version!
 
-**The plugin requires that you have gitflow installed, specifically the [AVH edition](https://github.com/petervanderdoes/gitflow). This is because the [Vanilla Git Flow](https://github.com/nvie/gitflow) hasn't been maintained in years.** See this page [for details](https://github.com/RubinCarter/gitflow4idea-fix/blob/develop/GITFLOW_VERSION.md)
+**The plugin requires that you have gitflow installed, specifically the [AVH edition](https://github.com/petervanderdoes/gitflow). This is because the [Vanilla Git Flow](https://github.com/nvie/gitflow) hasn't been maintained in years.** See this page [for details](https://github.com/svincio/gitflow4idea-plus/blob/develop/GITFLOW_VERSION.md)
 
 ## Offline Installation
-download path: https://github.com/RubinCarter/gitflow4idea-fix/releases
+download path: https://github.com/svincio/gitflow4idea-plus/releases
 
 Installation document:https://www.jetbrains.com/help/idea/managing-plugins.html#install_plugin_from_disk
 
-**The plugin requires that you have gitflow installed, specifically the [AVH edition](https://github.com/petervanderdoes/gitflow). This is because the [Vanilla Git Flow](https://github.com/nvie/gitflow) hasn't been maintained in years.** See this page [for details](https://github.com/RubinCarter/gitflow4idea-fix/blob/develop/GITFLOW_VERSION.md)
+**The plugin requires that you have gitflow installed, specifically the [AVH edition](https://github.com/petervanderdoes/gitflow). This is because the [Vanilla Git Flow](https://github.com/nvie/gitflow) hasn't been maintained in years.** See this page [for details](https://github.com/svincio/gitflow4idea-plus/blob/develop/GITFLOW_VERSION.md)
 
 ## Caveats
 
@@ -43,13 +46,14 @@ While the plugin is operational and contains all basic functions (init/feature/r
 ## Helping out
 
 This project is under active development.
-If you encounter any bug or an issue, I encourage you to add the them to the [Issues list](https://github.com/RubinCarter/gitflow4idea-fix/issues) on Github.
+If you encounter any bug or an issue, I encourage you to add the them to the [Issues list](https://github.com/svincio/gitflow4idea-plus/issues) on Github.
 Feedback and suggestions are also very welcome.
 
 ## License
 
 This plugin is under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html).
 Copyright 2013-2020, Opher Vishnia.
+Modifications copyright 2026, Simone Vincenzi.
 
 ## Who and why
 
@@ -60,4 +64,3 @@ This plugin is forked from original https://github.com/OpherV/gitflow4idea .
 
 
 
-[1]: https://plugins.jetbrains.com/plugin/18320-git-flow-integration-plus

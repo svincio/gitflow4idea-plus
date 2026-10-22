@@ -174,7 +174,7 @@ public class GitflowWidget extends GitBranchWidget implements GitRepositoryChang
                         .yesText("More information (open browser)")
                         .noText("Close");
                 if (builder.ask(getProject())) {
-                    BrowserUtil.browse("https://github.com/RubinCarter/gitflow4idea-plus/blob/develop/GITFLOW_VERSION.md");
+                    BrowserUtil.browse("https://github.com/svincio/gitflow4idea-plus/blob/develop/GITFLOW_VERSION.md");
                 }
             }
         };

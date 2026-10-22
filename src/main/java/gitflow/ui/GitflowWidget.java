@@ -183,15 +183,16 @@ public class GitflowWidget extends GitBranchWidget implements GitRepositoryChang
     }
 
     public void updateAsync() {
-        ApplicationManager.getApplication().invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                update();
-
+        // update() runs git commands (git config): keep it off the EDT to avoid freezes (#47)
+        ApplicationManager.getApplication().executeOnPooledThread(() -> {
+            Project project = getProject();
+            if (project == null || project.isDisposed()) return;
+            update();
+            ApplicationManager.getApplication().invokeLater(() -> {
                 if (myStatusBar != null){
                     myStatusBar.updateWidget(ID());
                 }
-            }
+            }, project.getDisposed());
         });
     }
 

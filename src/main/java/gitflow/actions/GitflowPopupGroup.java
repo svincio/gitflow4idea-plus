@@ -52,7 +52,7 @@ public class GitflowPopupGroup {
         }
     }
 
-    public ActionGroup getActionGroup (){
+    public DefaultActionGroup getActionGroup (){
 
         return actionGroup;
     }

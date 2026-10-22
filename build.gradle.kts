@@ -13,8 +13,8 @@ repositories {
     }
 }
 
-group = "gitflow4idea-plus"
-version = "0.8.2-beta.1"
+group = "io.github.svincio"
+version = "0.9.0"
 
 java {
     toolchain {
@@ -48,17 +48,22 @@ intellijPlatform {
 
 tasks {
     patchPluginXml {
-        pluginId.set("Gitflow-Fix")
+        pluginId.set("io.github.svincio.gitflow")
         pluginDescription.set("""
-            <H2>Git Flow Integration for Intellij</H2>
-            An intelliJ plugin providing a UI layer for git-flow, which in itself is a collection of Git extensions to provide high-level repository operations for Vincent <a href="https://nvie.com/posts/a-successful-git-branching-model/">Driessen's branching model</a>
+            <H2>Git Flow Integration for IntelliJ</H2>
+            An IntelliJ plugin providing a UI layer for git-flow, which in itself is a collection of Git extensions to provide high-level repository operations for Vincent <a href="https://nvie.com/posts/a-successful-git-branching-model/">Driessen's branching model</a>.
+            <p>Requires a git-flow CLI: AVH Edition, git-flow-next or gitflow-cjs.</p>
+            <p>Maintained fork for current IntelliJ versions (2026.2+) by Simone Vincenzi: <a href="https://github.com/svincio/gitflow4idea-plus">https://github.com/svincio/gitflow4idea-plus</a>.
+            Based on <a href="https://github.com/RubinCarter/gitflow4idea-plus">gitflow4idea-plus</a> by Rubin Carter,
+            originally <a href="https://github.com/OpherV/gitflow4idea">gitflow4idea</a> by Opher Vishnia. Apache License 2.0.</p>
         """)
         pluginVersion.set("${project.version}")
         sinceBuild.set("262")
         untilBuild.set(provider { null })
         changeNotes.set("""
-            <H2>Changelog for 0.8.2-beta.1</H2>
+            <H2>Changelog for 0.9.0</H2>
             <ul>
+              <li>New plugin ID and vendor: maintained fork "Git Flow Integration Revived" by Simone Vincenzi</li>
               <li>Support for IntelliJ 2026.2 (build 262): migrate to IntelliJ Platform Gradle Plugin 2.x, Java 25</li>
               <li>Task Management plugin is now an optional dependency (no longer bundled in 2026.x) #51</li>
               <li>Fix "Freeze in EDT": status bar widget refresh runs off the EDT #47</li>

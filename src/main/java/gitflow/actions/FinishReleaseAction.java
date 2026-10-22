@@ -1,8 +1,6 @@
 package gitflow.actions;
 
-import com.intellij.openapi.actionSystem.ActionUiKind;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.ex.ActionUtil;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.ui.Messages;
@@ -37,6 +35,10 @@ public class FinishReleaseAction extends AbstractBranchAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         super.actionPerformed(e);
+        finish(e);
+    }
+
+    private void finish(AnActionEvent e) {
 
         GitflowFinishActionAckDialog ackDialog = new GitflowFinishActionAckDialog(myProject);
         ackDialog.show();
@@ -114,8 +116,10 @@ public class FinishReleaseAction extends AbstractBranchAction {
                             //merge conflicts if necessary
                             if (errorLineHandler.hasMergeError){
                                 handleMerge(myProject, () -> {
-                                    FinishReleaseAction completeFinisReleaseAction = new FinishReleaseAction(myRepo, releaseName, tagMessage);
-                                    ActionUtil.performAction(completeFinisReleaseAction, AnActionEvent.createEvent(completeFinisReleaseAction, event.getDataContext(), null, event.getPlace(), ActionUiKind.NONE, null));
+                                    // resume "git flow release finish" now that the merge is committed
+                                    FinishReleaseAction completeFinishReleaseAction = new FinishReleaseAction(myRepo, releaseName, tagMessage);
+                                    completeFinishReleaseAction.setup(myProject);
+                                    completeFinishReleaseAction.finish(event);
                                 });
                             }
                         }

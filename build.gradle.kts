@@ -18,8 +18,14 @@ version = "0.9.0"
 
 java {
     toolchain {
+        // JDK 25 is needed to read the 2026.2 platform classes (class file version 69)
         languageVersion = JavaLanguageVersion.of(25)
     }
+}
+
+// Emit Java 21 bytecode so the plugin also loads on IDEs running on JBR 21
+tasks.withType<JavaCompile> {
+    options.release = 21
 }
 
 dependencies {
@@ -41,7 +47,11 @@ dependencies {
 intellijPlatform {
     pluginVerification {
         ides {
-            create(IntelliJPlatformType.IntellijIdea, "2026.2.2")
+            // -PverifyIde=<version> (and -PverifyIdeType=IU for releases before 2025.3) to check other IDE versions
+            create(
+                IntelliJPlatformType.fromCode(providers.gradleProperty("verifyIdeType").getOrElse("IU")),
+                providers.gradleProperty("verifyIde").getOrElse("2026.2.2"),
+            )
         }
     }
 }
@@ -53,22 +63,22 @@ tasks {
             <H2>Git Flow Integration for IntelliJ</H2>
             An IntelliJ plugin providing a UI layer for git-flow, which in itself is a collection of Git extensions to provide high-level repository operations for Vincent <a href="https://nvie.com/posts/a-successful-git-branching-model/">Driessen's branching model</a>.
             <p>Requires a git-flow CLI: AVH Edition, git-flow-next or gitflow-cjs.</p>
-            <p>Maintained fork for current IntelliJ versions (2026.2+) by Simone Vincenzi: <a href="https://github.com/svincio/gitflow4idea-plus">https://github.com/svincio/gitflow4idea-plus</a>.
+            <p>Maintained fork for current IntelliJ versions (2024.2 to 2026.2 and later) by Simone Vincenzi: <a href="https://github.com/svincio/gitflow4idea-plus">https://github.com/svincio/gitflow4idea-plus</a>.
             Based on <a href="https://github.com/RubinCarter/gitflow4idea-plus">gitflow4idea-plus</a> by Rubin Carter,
             originally <a href="https://github.com/OpherV/gitflow4idea">gitflow4idea</a> by Opher Vishnia. Apache License 2.0.</p>
         """)
         pluginVersion.set("${project.version}")
-        sinceBuild.set("262")
+        sinceBuild.set("242")
         untilBuild.set(provider { null })
         changeNotes.set("""
             <H2>Changelog for 0.9.0</H2>
             <ul>
               <li>New plugin ID and vendor: maintained fork "Git Flow Manager" by Simone Vincenzi</li>
-              <li>Support for IntelliJ 2026.2 (build 262): migrate to IntelliJ Platform Gradle Plugin 2.x, Java 25</li>
+              <li>Support for IntelliJ 2024.2 to 2026.2 (builds 242 to 262): migrate to IntelliJ Platform Gradle Plugin 2.x</li>
               <li>Task Management plugin is now an optional dependency (no longer bundled in 2026.x) #51</li>
               <li>Fix "Freeze in EDT": status bar widget refresh runs off the EDT #47</li>
               <li>Fix NullPointerException on gitflowBranchUtil #42</li>
-              <li>Fix merge-conflict flow of Finish Feature/Bugfix/Release: repository refresh and merge commit ran on the EDT (forbidden since 2026.x), so the finish was never resumed</li>
+              <li>Fix merge-conflict flow of Finish Feature/Bugfix/Release: the finish was never resumed on 2026.x; conflicts are now resolved with the standard Git merge dialog, without the "Was the merge completed?" prompt</li>
               <li>Remove all internal, override-only, deprecated and scheduled-for-removal API usages flagged by the Plugin Verifier</li>
             </ul>
 

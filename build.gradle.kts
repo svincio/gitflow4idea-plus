@@ -14,7 +14,7 @@ repositories {
 }
 
 group = "io.github.svincio"
-version = "0.9.2"
+version = "0.9.3"
 
 java {
     toolchain {
@@ -71,6 +71,10 @@ tasks {
         sinceBuild.set("242")
         untilBuild.set(provider { null })
         changeNotes.set("""
+            <H2>Changelog for 0.9.3</H2>
+            <ul>
+              <li>Handle git-flow version check failures without reporting an IDE error, and clarify the installation guidance</li>
+            </ul>
             <H2>Changelog for 0.9.2</H2>
             <ul>
               <li>git-flow-next: merge conflicts during Finish Feature/Bugfix/Release are detected, the Git merge dialog opens and the finish resumes</li>

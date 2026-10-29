@@ -4,6 +4,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vcs.VcsException;
 import com.intellij.openapi.util.Disposer;
 import org.jetbrains.annotations.NotNull;
 
@@ -78,6 +79,8 @@ public class GitflowVersionTester {
 		try {
 			returnedVersion = gitflow.version(project).getOutputOrThrow();
 			logger.info("git flow version: " + returnedVersion);
+		} catch (VcsException e) {
+			logger.warn("Could not determine git flow version", e);
 		} catch (Exception e) {
 			logger.error("Could not determine git flow version", e);
 		}

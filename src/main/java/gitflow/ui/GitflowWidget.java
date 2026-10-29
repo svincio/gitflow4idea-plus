@@ -164,8 +164,9 @@ public class GitflowWidget extends GitBranchWidget implements GitRepositoryChang
                 popup.show(new RelativePoint(mouseEvent.getComponent(), at));
             } else {
                 MessageDialogBuilder.YesNo builder = MessageDialogBuilder.yesNo(
-                        "Unsupported Git Flow version",
-                        "The Git Flow CLI version installed isn't supported.\n\n" +
+                        "Git Flow unavailable or unsupported",
+                        "Git Flow could not be found or its version isn't supported.\n" +
+                        "Check that Git Flow is installed and available to the IDE.\n\n" +
                         "Supported implementations:\n" +
                         "• git-flow (AVH Edition)\n" +
                         "• git-flow-next\n" +

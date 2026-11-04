@@ -14,7 +14,7 @@ repositories {
 }
 
 group = "io.github.svincio"
-version = "0.9.3"
+version = "1.0.0"
 
 java {
     toolchain {
@@ -71,6 +71,11 @@ tasks {
         sinceBuild.set("242")
         untilBuild.set(provider { null })
         changeNotes.set("""
+            <H2>Changelog for 1.0.0</H2>
+            <ul>
+              <li>First stable release on the JetBrains Marketplace (same features as 0.9.3)</li>
+              <li>New plugin icon</li>
+            </ul>
             <H2>Changelog for 0.9.3</H2>
             <ul>
               <li>Handle git-flow version check failures without reporting an IDE error, and clarify the installation guidance</li>

@@ -4,6 +4,8 @@
 > itself a fork of [gitflow4idea](https://github.com/OpherV/gitflow4idea) (Opher Vishnia).
 > It brings the plugin to current IntelliJ versions (2024.2 to 2026.2 and later). Plugin ID: `io.github.svincio.gitflow`.
 > Changes from upstream are listed in the plugin change notes and in the git history.
+>
+> Available on the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/35550-git-flow-manager).
 
 
 An IntelliJ plugin providing a UI layer for git-flow, which in itself is a collection of Git extensions to provide high-level repository operations for Vincent [Driessen's branching model](http://nvie.com/git-model).
@@ -32,15 +34,19 @@ Huge shoutout [to Kirill Likhodedov](https://github.com/klikh), who wrote much o
 - A git-flow CLI on the `PATH`: [AVH edition](https://github.com/petervanderdoes/gitflow), [git-flow-next](https://github.com/gittower/git-flow-next) or [gitflow-cjs](https://github.com/CJ-Systems/gitflow-cjs).
   The original [nvie git-flow](https://github.com/nvie/gitflow) is not supported: it hasn't been maintained in years. See [GITFLOW_VERSION.md](GITFLOW_VERSION.md).
   On macOS the Homebrew formula `git-flow-avh` was disabled on 2025-03-03 (existing installs keep working); for new setups `brew install git-flow-next`.
-  On Debian/Ubuntu `apt install git-flow` still installs AVH. On Windows, download git-flow-next from its [releases](https://github.com/gittower/git-flow-next/releases).
+  On Debian/Ubuntu `apt install git-flow` still installs AVH. On Windows: `winget install GitTower.GitFlowNext` (or `scoop install git-flow-next`).
 
 ## Installation
 
-The plugin is not on the JetBrains Marketplace yet.
+1. If you had *Git Flow Integration Plus* (ID `Gitflow-Fix`) installed, uninstall it first, otherwise you get two Gitflow widgets.
+2. In the IDE: **Settings → Plugins → Marketplace**, search for **Git Flow Manager**, install it and restart the IDE.
+   Or install it from the [plugin page](https://plugins.jetbrains.com/plugin/35550-git-flow-manager).
 
-1. Download `git-flow-manager-<version>.zip` from the [Releases page](https://github.com/svincio/gitflow4idea-plus/releases). Do not unzip it.
-2. In the IDE: **Settings → Plugins → ⚙ → Install Plugin from Disk…**, select the zip and restart the IDE.
-3. If you had *Git Flow Integration Plus* (ID `Gitflow-Fix`) installed, uninstall it first, otherwise you get two Gitflow widgets.
+Without Marketplace access, download `git-flow-manager-<version>.zip` from the [Releases page](https://github.com/svincio/gitflow4idea-plus/releases) (do not unzip it)
+and use **Settings → Plugins → ⚙ → Install Plugin from Disk…**.
+
+If you added the beta repository `https://plugins.jetbrains.com/plugins/beta/list` during testing, remove it in
+**Settings → Plugins → ⚙ → Manage Plugin Repositories…** to receive the stable updates.
 
 The Gitflow widget appears in the status bar, the actions are in **Git → Gitflow** and in the widget popup.
 

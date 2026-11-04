@@ -60,12 +60,25 @@ tasks {
     patchPluginXml {
         pluginId.set("io.github.svincio.gitflow")
         pluginDescription.set("""
-            <H2>Git Flow Integration for IntelliJ</H2>
-            An IntelliJ plugin providing a UI layer for git-flow, which in itself is a collection of Git extensions to provide high-level repository operations for Vincent <a href="https://nvie.com/posts/a-successful-git-branching-model/">Driessen's branching model</a>.
-            <p>Requires a git-flow CLI: AVH Edition, git-flow-next or gitflow-cjs.</p>
-            <p>Maintained fork for current IntelliJ versions (2024.2 to 2026.2 and later) by Simone Vincenzi: <a href="https://github.com/svincio/gitflow4idea-plus">https://github.com/svincio/gitflow4idea-plus</a>.
-            Based on <a href="https://github.com/RubinCarter/gitflow4idea-plus">gitflow4idea-plus</a> by Rubin Carter,
+            <p><b>Git-flow for IntelliJ-based IDEs</b>: start, finish and publish features, releases, bugfixes and hotfixes from the status bar widget or the <b>Git → Gitflow</b> menu.</p>
+            <h3>Features</h3>
+            <ul>
+              <li>Status bar widget with the git-flow actions available for the current branch</li>
+              <li><b>Start</b>, <b>Finish</b> and <b>Publish</b> for features, releases, bugfixes and hotfixes; <b>Track</b> remote features, releases and bugfixes</li>
+              <li>Merge conflicts during Finish Feature, Bugfix or Release open the standard IntelliJ merge dialog, and the finish resumes once they are resolved</li>
+              <li>Projects with multiple Git repositories</li>
+              <li>Optional integration with Task Management</li>
+            </ul>
+            <h3>Requirements</h3>
+            <ul>
+              <li>IntelliJ IDEA 2024.2 or later, or another JetBrains IDE with Git</li>
+              <li>A git-flow CLI on the <code>PATH</code>: <a href="https://github.com/gittower/git-flow-next">git-flow-next</a> or <a href="https://github.com/petervanderdoes/gitflow-avh">git-flow AVH Edition</a>.
+                Windows: <code>winget install GitTower.GitFlowNext</code> · macOS: <code>brew install git-flow-next</code> · Debian/Ubuntu: <code>apt install git-flow</code></li>
+            </ul>
+            <h3>Credits</h3>
+            <p>Maintained fork of <a href="https://github.com/RubinCarter/gitflow4idea-plus">gitflow4idea-plus</a> by Rubin Carter,
             originally <a href="https://github.com/OpherV/gitflow4idea">gitflow4idea</a> by Opher Vishnia. Apache License 2.0.</p>
+            <p>Source code and issues: <a href="https://github.com/svincio/gitflow4idea-plus">github.com/svincio/gitflow4idea-plus</a></p>
         """)
         pluginVersion.set("${project.version}")
         sinceBuild.set("242")
